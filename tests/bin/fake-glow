@@ -1,0 +1,12 @@
+#!/bin/sh
+# Stand-in for glow in tests: echoes what it received.
+# Set GLOWIT_FAKE_FAIL=1 to make it fail like glow does.
+
+if [ "$GLOWIT_FAKE_FAIL" = "1" ]; then
+  echo "bad style" >&2
+  exit 1
+fi
+
+echo "args: $*"
+echo "CLICOLOR_FORCE=$CLICOLOR_FORCE"
+cat
