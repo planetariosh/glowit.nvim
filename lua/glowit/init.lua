@@ -71,6 +71,11 @@ local function open_float(buf)
 end
 
 function M.open()
+  if vim.fn.executable(config.glow.command) ~= 1 then
+    vim.notify('glowit.nvim: glow not found: ' .. config.glow.command, vim.log.levels.WARN)
+    return
+  end
+
   M.close()
   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
   local out, err = M.render(lines, width())
@@ -143,9 +148,17 @@ end
 function M.setup(opts)
   config = vim.tbl_deep_extend('force', vim.deepcopy(defaults), opts or {})
 
+  local group = vim.api.nvim_create_augroup('glowit', { clear = true })
   if config.keymaps.toggle then
-    vim.keymap.set({ 'n', 't' }, config.keymaps.toggle, M.toggle, {
-      desc = 'Markdown preview',
+    vim.api.nvim_create_autocmd('FileType', {
+      group = group,
+      pattern = 'markdown',
+      callback = function(args)
+        vim.keymap.set({ 'n' }, config.keymaps.toggle, M.toggle, {
+          buffer = args.buf,
+          desc = 'Markdown preview',
+        })
+      end,
     })
   end
 end
