@@ -1,7 +1,8 @@
 # glowit.nvim
 
-**Markdown, rendered, one key away.** A small Neovim plugin that shows
-the markdown buffer you are editing in a centered floating window,
+**Markdown, rendered, one key away.**
+
+A small Neovim plugin that shows the markdown buffer you are editing in a centered floating window,
 rendered by [glow](https://github.com/charmbracelet/glow).
 
 ## Requirements
